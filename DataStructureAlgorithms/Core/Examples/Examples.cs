@@ -6,6 +6,14 @@ namespace DataStructureAlgorithms.Core.Examples
 {
     public static class Examples
     {
+        public static void BinarySearch()
+        {
+            var nums = new[] {1, 4, 6, 12, 24, 85, 124, 125, 128, 422, 1244};
+            var binaryTree = new BinaryTree.BinaryTree();
+            var result = binaryTree.RBinarySearch(nums, 422);
+            Console.WriteLine(result);
+        }
+
         public static void BinaryTreeSearch()
         {
             // defining our sample tree

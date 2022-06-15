@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DataStructureAlgorithms.Core.Extensions;
 
 namespace DataStructureAlgorithms.Core.BinaryTree
@@ -8,7 +9,47 @@ namespace DataStructureAlgorithms.Core.BinaryTree
         #region Public
 
         /// <summary>
-        ///     Recursive Binary Tree Search
+        ///     Resursive Binary Search Algorithm
+        /// </summary>
+        public int RBinarySearch(int[] arr, int target)
+        {
+            return BinarySearch(arr, target, 0, arr.Length - 1);
+        }
+
+        /// <summary>
+        ///     Binary Search Algorithm
+        /// </summary>
+        public int BinarySearch(int[] arr, int target)
+        {
+            var left = 0;
+            var right = arr.Length - 1;
+
+            while (true)
+            {
+                if (left > right)
+                    return -1;
+
+                var pivot = (int) Math.Floor((decimal) (left + right) / 2);
+
+                if (arr[pivot] == target)
+                    return pivot;
+
+                if (arr[pivot] > target)
+                {
+                    right = pivot - 1;
+                    continue;
+                }
+
+                if (arr[pivot] < target)
+                {
+                    left = pivot + 1;
+                    continue;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Recursive Binary Tree Search Algorithm
         /// </summary>
         public Node RBinaryTreeSearch(Node node, int target)
         {
@@ -16,7 +57,7 @@ namespace DataStructureAlgorithms.Core.BinaryTree
         }
 
         /// <summary>
-        ///     Binary Tree Search
+        ///     Binary Tree Search Algorithm
         /// </summary>
         public Node BinaryTreeSearch(Node startingPoint, int target)
         {
@@ -79,6 +120,25 @@ namespace DataStructureAlgorithms.Core.BinaryTree
         #endregion
 
         #region Private
+
+        private int BinarySearch(int[] arr, int target, int left, int right)
+        {
+            if (left > right)
+                return -1;
+
+            var pivot = (int) Math.Floor((decimal) (left + right) / 2);
+
+            if (arr[pivot] == target)
+                return pivot;
+
+            if (arr[pivot] > target)
+                return BinarySearch(arr, target, left, pivot - 1);
+
+            if (arr[pivot] < target)
+                return BinarySearch(arr, target, pivot + 1, right);
+
+            return 0;
+        }
 
         private Node NodeSearch(Node node, int target)
         {
