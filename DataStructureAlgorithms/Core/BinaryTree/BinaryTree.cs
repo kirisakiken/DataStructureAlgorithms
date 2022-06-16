@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DataStructureAlgorithms.Core.Extensions;
 
 namespace DataStructureAlgorithms.Core.BinaryTree
@@ -29,7 +28,7 @@ namespace DataStructureAlgorithms.Core.BinaryTree
                 if (left > right)
                     return -1;
 
-                var pivot = (int) Math.Floor((decimal) (left + right) / 2);
+                var pivot = (left + right) / 2;
 
                 if (arr[pivot] == target)
                     return pivot;
@@ -80,6 +79,9 @@ namespace DataStructureAlgorithms.Core.BinaryTree
         {
             var arr = new List<Node>();
             var root = startNode.GetRoot();
+            if (root == null)
+                return null;
+
             var stack = new List<Node>();
 
             if (startNode != null)
@@ -95,6 +97,9 @@ namespace DataStructureAlgorithms.Core.BinaryTree
         {
             var arr = new List<Node>();
             var root = startNode.GetRoot();
+            if (root == null)
+                return null;
+
             var stack = new List<Node>();
 
             if (startNode != null)
@@ -126,7 +131,7 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             if (left > right)
                 return -1;
 
-            var pivot = (int) Math.Floor((decimal) (left + right) / 2);
+            var pivot = (left + right) / 2;
 
             if (arr[pivot] == target)
                 return pivot;

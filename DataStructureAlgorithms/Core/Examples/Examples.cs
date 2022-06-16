@@ -108,12 +108,16 @@ namespace DataStructureAlgorithms.Core.Examples
 
             var binaryTree = new BinaryTree.BinaryTree();
 
-            var depthFirstValues = binaryTree.RDepthFirstValues(node2);
-            var result = depthFirstValues.Aggregate("[", (current, node) => current + (node.Value + ", "));
-            result = result.Remove(result.Length - 2, 2);
-            result += "]";
-            
-            Console.WriteLine(result);
+            var depthFirstValues = binaryTree.RDepthFirstValues(null);
+            if (depthFirstValues != null)
+            {
+                var result = depthFirstValues.Aggregate("[", (current, node) => current + (node.Value + ", "));
+                result = result.Remove(result.Length - 2, 2);
+                result += "]";
+                Console.WriteLine(result);
+            }
+            else
+                Console.WriteLine("[]");
         }
     }
 }
