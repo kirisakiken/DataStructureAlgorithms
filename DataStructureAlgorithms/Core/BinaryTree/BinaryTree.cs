@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using DataStructureAlgorithms.Core.Extensions;
 
@@ -212,6 +213,49 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             return sum;
         }
 
+        public int RBinaryTreeMin(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var min = current.Value;
+            var queue = new Queue<Node>();
+
+            queue.Enqueue(current);
+            return BinaryMinNode(min, queue);
+        }
+
+        /// <summary>
+        ///     Binary Tree Minimum Algorithm
+        /// </summary>
+        public int BinaryTreeMin(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var min = current.Value;
+            var queue = new Queue<Node>();
+            queue.Enqueue(current);
+
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
+
+                if (min > current.Value)
+                    min = current.Value;
+
+                if (current.LeftChild != null)
+                    queue.Enqueue(current.LeftChild);
+
+                if (current.RightChild != null)
+                    queue.Enqueue(current.RightChild);
+            }
+
+            return min;
+        }
+
         #endregion
 
         #region Private
@@ -297,6 +341,25 @@ namespace DataStructureAlgorithms.Core.BinaryTree
                 queue.Enqueue(current.RightChild);
 
             return BinaryNodeSum(sum, queue);
+        }
+
+        private int BinaryMinNode(int min, Queue<Node> queue)
+        {
+            if (queue.Count == 0)
+                return min;
+
+            var current = queue.Dequeue();
+
+            if (min > current.Value)
+                min = current.Value;
+
+            if (current.LeftChild != null)
+                queue.Enqueue(current.LeftChild);
+
+            if (current.RightChild != null)
+                queue.Enqueue(current.RightChild);
+
+            return BinaryMinNode(min, queue);
         }
 
         #endregion
