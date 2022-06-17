@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using DataStructureAlgorithms.Core.Extensions;
 
 namespace DataStructureAlgorithms.Core.BinaryTree
@@ -122,6 +124,50 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             return arr;
         }
 
+        /// <summary>
+        ///     Recursive Breadth First Values Algorithm
+        /// </summary>
+        public List<Node> RBreadthFirstValues(Node startNode)
+        {
+            var result = new List<Node>();
+            var queue = new Queue<Node>();
+
+            var root = startNode?.GetRoot();
+            if (root == null)
+                return null;
+
+            queue.Enqueue(startNode.GetRoot());
+            return BreadthFirstNodes(result, queue);
+        }
+
+        /// <summary>
+        ///     Breadth First Values Algorithm
+        /// </summary>
+        public List<Node> BreadthFirstValues(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return null;
+
+            var result = new List<Node>();
+            var queue = new Queue<Node>();
+
+            queue.Enqueue(current);
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
+                result.Add(current);
+
+                if (current.LeftChild != null)
+                    queue.Enqueue(current.LeftChild);
+
+                if (current.RightChild != null)
+                    queue.Enqueue(current.RightChild);
+            }
+
+            return result;
+        }
+
         #endregion
 
         #region Private
@@ -173,6 +219,23 @@ namespace DataStructureAlgorithms.Core.BinaryTree
                 return DepthFirstNodes(result, stack);
 
             return result;
+        }
+
+        private List<Node> BreadthFirstNodes(List<Node> result, Queue<Node> queue)
+        {
+            if (queue.Count == 0)
+                return result;
+
+            var current = queue.Dequeue();
+            result.Add(current);
+
+            if (current.LeftChild != null)
+                queue.Enqueue(current.LeftChild);
+
+            if (current.RightChild != null)
+                queue.Enqueue(current.RightChild);
+
+            return BreadthFirstNodes(result, queue);
         }
 
         #endregion

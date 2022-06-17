@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Examples.Examples.DepthFirstValues();
+            Examples.Examples.BreadthFirstValues();
         }
     }
 }
