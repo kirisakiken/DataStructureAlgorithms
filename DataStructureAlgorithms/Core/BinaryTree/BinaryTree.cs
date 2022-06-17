@@ -168,6 +168,50 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             return result;
         }
 
+        /// <summary>
+        ///     Recursive Binary Tree Sum Algorithm
+        /// </summary>
+        public int RBinaryTreeSum(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var sum = 0;
+            var queue = new Queue<Node>();
+
+            queue.Enqueue(current);
+            return BinaryNodeSum(sum, queue);
+        }
+
+        /// <summary>
+        ///     Binary Tree Sum Algorithm
+        /// </summary>
+        public int BinaryTreeSum(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var sum = 0;
+            var queue = new Queue<Node>();
+
+            queue.Enqueue(current);
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
+                sum += current.Value;
+
+                if (current.LeftChild != null)
+                    queue.Enqueue(current.LeftChild);
+
+                if (current.RightChild != null)
+                    queue.Enqueue(current.RightChild);
+            }
+
+            return sum;
+        }
+
         #endregion
 
         #region Private
@@ -236,6 +280,23 @@ namespace DataStructureAlgorithms.Core.BinaryTree
                 queue.Enqueue(current.RightChild);
 
             return BreadthFirstNodes(result, queue);
+        }
+
+        private int BinaryNodeSum(int sum, Queue<Node> queue)
+        {
+            if (queue.Count == 0)
+                return sum;
+
+            var current = queue.Dequeue();
+            sum += current.Value;
+
+            if (current.LeftChild != null)
+                queue.Enqueue(current.LeftChild);
+
+            if (current.RightChild != null)
+                queue.Enqueue(current.RightChild);
+
+            return BinaryNodeSum(sum, queue);
         }
 
         #endregion
