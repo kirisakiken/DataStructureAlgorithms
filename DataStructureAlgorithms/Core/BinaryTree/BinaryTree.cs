@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq.Expressions;
-using System.Xml.XPath;
+﻿using System.Collections.Generic;
 using DataStructureAlgorithms.Core.Extensions;
 
 namespace DataStructureAlgorithms.Core.BinaryTree
@@ -227,6 +222,52 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             }
 
             return sum;
+        }
+
+        /// <summary>
+        ///     Recursive Binary Tree Maximum Algorithm
+        /// </summary>
+        public int RBinaryTreeMax(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var result = int.MinValue;
+            var queue = new Queue<Node>();
+            queue.Enqueue(current);
+
+            return BinaryMaxNode(result, queue);
+        }
+
+        /// <summary>
+        ///     Binary Tree Maximum Algorithm
+        /// </summary>
+        public int BinaryTreeMax(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var result = int.MinValue;
+            var queue = new Queue<Node>();
+
+            queue.Enqueue(current);
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
+
+                if (current.Value > result)
+                    result = current.Value;
+
+                if (current.LeftChild != null)
+                    queue.Enqueue(current.LeftChild);
+
+                if (current.RightChild != null)
+                    queue.Enqueue(current.RightChild);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -611,6 +652,25 @@ namespace DataStructureAlgorithms.Core.BinaryTree
                 queue.Enqueue(current.RightChild);
 
             return BinaryNodeSum(sum, queue);
+        }
+
+        private int BinaryMaxNode(int result, Queue<Node> queue)
+        {
+            if (queue.Count == 0)
+                return result;
+
+            var current = queue.Dequeue();
+
+            if (current.Value > result)
+                result = current.Value;
+
+            if (current.LeftChild != null)
+                queue.Enqueue(current.LeftChild);
+
+            if (current.RightChild != null)
+                queue.Enqueue(current.RightChild);
+
+            return BinaryMaxNode(result, queue);
         }
 
         private int BinaryMinNode(int min, Queue<Node> queue)
