@@ -6,6 +6,8 @@ namespace DataStructureAlgorithms.Core.Extensions
     {
         public static bool IsRoot(this Node self) => self?.Parent == null;
 
+        public static bool IsLeaf(this Node self) => self?.LeftChild == null && self?.RightChild == null;
+
         public static Node GetRoot(this Node node)
         {
             while (!node.IsRoot())

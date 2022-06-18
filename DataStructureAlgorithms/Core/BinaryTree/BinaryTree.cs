@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
+using System.Xml.XPath;
 using DataStructureAlgorithms.Core.Extensions;
 
 namespace DataStructureAlgorithms.Core.BinaryTree
@@ -80,11 +82,11 @@ namespace DataStructureAlgorithms.Core.BinaryTree
         /// </summary>
         public List<Node> RDepthFirstValues(Node startNode)
         {
-            var arr = new List<Node>();
             var root = startNode.GetRoot();
             if (root == null)
                 return null;
 
+            var arr = new List<Node>();
             var stack = new List<Node>();
 
             if (startNode != null)
@@ -96,13 +98,27 @@ namespace DataStructureAlgorithms.Core.BinaryTree
         /// <summary>
         ///     Depth First Values Algorithm
         /// </summary>
+        /// Version with Stack Data Structure type,
+        /// var stack = new Stack<!--Node-->>()
+        /// stack.Push(current);
+        /// while (stack.Count > 0)
+        /// {
+        ///     current = stack.Pop();
+        ///     arr.Add(current);
+        ///
+        ///     if (current.RightChild != null)
+        ///         stack.Push(current.RightChild);
+        ///
+        ///     if (current.LeftChild != null)
+        ///         stack.Push(current.LeftChild);
+        /// }
         public List<Node> DepthFirstValues(Node startNode)
         {
-            var arr = new List<Node>();
             var root = startNode.GetRoot();
             if (root == null)
                 return null;
 
+            var arr = new List<Node>();
             var stack = new List<Node>();
 
             if (startNode != null)
@@ -213,6 +229,9 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             return sum;
         }
 
+        /// <summary>
+        ///     Recursive Binary Tree Minimum Algorithm
+        /// </summary>
         public int RBinaryTreeMin(Node startNode)
         {
             var current = startNode.GetRoot();
@@ -254,6 +273,120 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             }
 
             return min;
+        }
+
+        /// <summary>
+        ///     Recursive Binary Tree Max Path Algorithm with Breadth First Search
+        /// </summary>
+        public int RBfsBinaryTreeMaxPath(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var queue = new Queue<Node>();
+            var result = int.MinValue;
+
+            queue.Enqueue(current);
+            return BfsBinaryMaxNodePath(result, queue);
+        }
+
+        /// <summary>
+        ///     Binary Tree Max Path Algorithm with Breadth First Search
+        /// </summary>
+        public int BfsBinaryTreeMaxPath(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var queue = new Queue<Node>();
+            var result = int.MinValue;
+
+            queue.Enqueue(current);
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
+                if (!current.IsLeaf())
+                {
+                    if (current.LeftChild != null)
+                        queue.Enqueue(current.LeftChild);
+
+                    if (current.RightChild != null)
+                        queue.Enqueue(current.RightChild);
+
+                    continue;
+                }
+
+                var pathSum = 0;
+                while (!current.IsRoot())
+                {
+                    pathSum += current.Value;
+                    current = current.Parent;
+                }
+                pathSum += current.Value;
+
+                if (pathSum >= result)
+                    result = pathSum;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        ///     Recursive Binary Tree Max Path Algorithm with Depth First Search
+        /// </summary>
+        public int RDfsBinaryTreeMaxPath(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var result = int.MinValue;
+            var stack = new Stack<Node>();
+            stack.Push(current);
+
+            return RfsBinaryMaxNodePath(result, stack);
+        }
+
+        /// <summary>
+        ///     Binary Tree Max Path Algorithm with Depth First Search
+        /// </summary>
+        public int DfsBinaryTreeMaxPath(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            var result = int.MinValue;
+            var stack = new Stack<Node>();
+            stack.Push(current);
+
+            while (stack.Count > 0)
+            {
+                current = stack.Pop();
+
+                if (!current.IsLeaf())
+                {
+                    if (current.RightChild != null)
+                        stack.Push(current.RightChild);
+
+                    if (current.LeftChild != null)
+                        stack.Push(current.LeftChild);
+
+                    continue;
+                }
+
+                var pathSum = 0;
+                while (!current.IsRoot())
+                {
+                    pathSum += current.Value;
+                    current = current.Parent;
+                }
+                pathSum += current.Value;
+
+                if (pathSum > result)
+                    result = pathSum;
+            }
+
+            return result;
         }
 
         #endregion
@@ -309,6 +442,23 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             return result;
         }
 
+        private List<Node> DepthFirstNodes(List<Node> result, Stack<Node> stack)
+        {
+            if (stack.Count == 0)
+                return result;
+
+            var current = stack.Pop();
+            result.Add(current);
+
+            if (current.LeftChild != null)
+                stack.Push(current.LeftChild);
+
+            if (current.RightChild != null)
+                stack.Push(current.RightChild);
+
+            return DepthFirstNodes(result, stack);
+        }
+
         private List<Node> BreadthFirstNodes(List<Node> result, Queue<Node> queue)
         {
             if (queue.Count == 0)
@@ -360,6 +510,70 @@ namespace DataStructureAlgorithms.Core.BinaryTree
                 queue.Enqueue(current.RightChild);
 
             return BinaryMinNode(min, queue);
+        }
+
+        private int BfsBinaryMaxNodePath(int result, Queue<Node> queue)
+        {
+            if (queue.Count == 0)
+                return result;
+
+            var current = queue.Dequeue();
+            if (!current.IsLeaf())
+            {
+                if (current.LeftChild != null)
+                    queue.Enqueue(current.LeftChild);
+
+                if (current.RightChild != null)
+                    queue.Enqueue(current.RightChild);
+
+                return BfsBinaryMaxNodePath(result, queue);
+            }
+
+            var pathSum = 0;
+            var target = current;
+            while (!target.IsRoot())
+            {
+                pathSum += target.Value;
+                target = target.Parent;
+            }
+            pathSum += target.Value;
+
+            if (pathSum > result)
+                result = pathSum;
+
+            return BfsBinaryMaxNodePath(result, queue);
+        }
+
+        private int RfsBinaryMaxNodePath(int result, Stack<Node> stack)
+        {
+            if (stack.Count == 0)
+                return result;
+
+            var current = stack.Pop();
+
+            if (!current.IsLeaf())
+            {
+                if (current.RightChild != null)
+                    stack.Push(current.RightChild);
+
+                if (current.LeftChild != null)
+                    stack.Push(current.LeftChild);
+
+                return RfsBinaryMaxNodePath(result, stack);
+            }
+
+            var pathSum = 0;
+            while (!current.IsRoot())
+            {
+                pathSum += current.Value;
+                current = current.Parent;
+            }
+            pathSum += current.Value;
+
+            if (pathSum > result)
+                result = pathSum;
+
+            return RfsBinaryMaxNodePath(result, stack);
         }
 
         #endregion
