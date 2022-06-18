@@ -355,10 +355,13 @@ namespace DataStructureAlgorithms.Core.BinaryTree
         public int DfsBinaryTreeMaxPath(Node startNode)
         {
             var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
             var result = int.MinValue;
             var stack = new Stack<Node>();
-            stack.Push(current);
 
+            stack.Push(current);
             while (stack.Count > 0)
             {
                 current = stack.Pop();
@@ -383,6 +386,123 @@ namespace DataStructureAlgorithms.Core.BinaryTree
                 pathSum += current.Value;
 
                 if (pathSum > result)
+                    result = pathSum;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        ///     Recursive Binary Tree Min Path Algorithm with Depth First Search
+        /// </summary>
+        public int RDfsBinaryTreeMinPath(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var result = int.MaxValue;
+            var stack = new Stack<Node>();
+            stack.Push(current);
+
+            return DfsBinaryMinNodePath(result, stack);
+        }
+
+        /// <summary>
+        ///     Binary Tree Min Path Algorithm with Depth First Search
+        /// </summary>
+        public int DfsBinaryTreeMinPath(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var result = int.MaxValue;
+            var stack = new Stack<Node>();
+
+            stack.Push(current);
+            while (stack.Count > 0)
+            {
+                current = stack.Pop();
+
+                if (!current.IsLeaf())
+                {
+                    if (current.RightChild != null)
+                        stack.Push(current.RightChild);
+
+                    if (current.LeftChild != null)
+                        stack.Push(current.LeftChild);
+
+                    continue;
+                }
+
+                var pathSum = 0;
+                while (!current.IsRoot())
+                {
+                    pathSum += current.Value;
+                    current = current.Parent;
+                }
+                pathSum += current.Value;
+
+                if (pathSum < result)
+                    result = pathSum;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        ///     Recursive Binary Tree Min Path Algorithm with Breadth First Search
+        /// </summary>
+        public int RBfsBinaryTreeMinPath(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var result = int.MaxValue;
+            var queue = new Queue<Node>();
+            queue.Enqueue(current);
+
+            return BfsBinaryMinNodePath(result, queue);
+        }
+
+        /// <summary>
+        ///     Binary Tree Min Path Algorithm with Breadth First Search
+        /// </summary>
+        public int BfsBinaryTreeMinPath(Node startNode)
+        {
+            var current = startNode.GetRoot();
+            if (current == null)
+                return 0;
+
+            var result = int.MaxValue;
+            var queue = new Queue<Node>();
+
+            queue.Enqueue(current);
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
+                if (!current.IsLeaf())
+                {
+                    if (current.LeftChild != null)
+                        queue.Enqueue(current.LeftChild);
+
+                    if (current.RightChild != null)
+                        queue.Enqueue(current.RightChild);
+
+                    continue;
+                }
+
+                var pathSum = 0;
+                while (!current.IsRoot())
+                {
+                    pathSum += current.Value;
+                    current = current.Parent;
+                }
+                pathSum += current.Value;
+
+                if (pathSum < result)
                     result = pathSum;
             }
 
@@ -574,6 +694,70 @@ namespace DataStructureAlgorithms.Core.BinaryTree
                 result = pathSum;
 
             return RfsBinaryMaxNodePath(result, stack);
+        }
+
+        private int DfsBinaryMinNodePath(int result, Stack<Node> stack)
+        {
+            if (stack.Count == 0)
+                return result;
+
+            var current = stack.Pop();
+
+            if (!current.IsLeaf())
+            {
+                if (current.RightChild != null)
+                    stack.Push(current.RightChild);
+
+                if (current.LeftChild != null)
+                    stack.Push(current.LeftChild);
+
+                return DfsBinaryMinNodePath(result, stack);
+            }
+
+            var pathSum = 0;
+            while (!current.IsRoot())
+            {
+                pathSum += current.Value;
+                current = current.Parent;
+            }
+            pathSum += current.Value;
+
+            if (pathSum < result)
+                result = pathSum;
+
+            return DfsBinaryMinNodePath(result, stack);
+        }
+
+        private int BfsBinaryMinNodePath(int result, Queue<Node> queue)
+        {
+            if (queue.Count == 0)
+                return result;
+
+            var current = queue.Dequeue();
+
+            if (!current.IsLeaf())
+            {
+                if (current.LeftChild != null)
+                    queue.Enqueue(current.LeftChild);
+
+                if (current.RightChild != null)
+                    queue.Enqueue(current.RightChild);
+
+                return BfsBinaryMinNodePath(result, queue);
+            }
+
+            var pathSum = 0;
+            while (!current.IsRoot())
+            {
+                pathSum += current.Value;
+                current = current.Parent;
+            }
+            pathSum += current.Value;
+
+            if (pathSum < result)
+                result = pathSum;
+
+            return BfsBinaryMinNodePath(result, queue);
         }
 
         #endregion

@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Examples.Examples.BinaryTreeMaxPathDfs();
+            Examples.Examples.BinaryTreeMinPathDfs();
         }
     }
 }
