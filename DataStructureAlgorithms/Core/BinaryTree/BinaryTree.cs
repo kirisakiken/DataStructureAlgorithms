@@ -3,6 +3,21 @@ using DataStructureAlgorithms.Core.Extensions;
 
 namespace DataStructureAlgorithms.Core.BinaryTree
 {
+    // TODO: REMOVE PARENT FROM NODE and modify algorithms according to example
+    // public int MaxDepth(TreeNode root)
+    // {
+    //     if (root == null)
+    //     return int.MinValue;
+    //
+    //     if (root.left == null && root.right == null)
+    //     return root.val;
+    //
+    //     var left = MaxDepth(root.left);
+    //     var right = MaxDepth(root.right);
+    //     var maxChild = left >= right ? left : right;
+    //
+    //     return root.val + maxChild;
+    // }
     public class BinaryTree
     {
         #region Public
@@ -387,7 +402,7 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             var stack = new Stack<Node>();
             stack.Push(current);
 
-            return RfsBinaryMaxNodePath(result, stack);
+            return RDfsBinaryMaxNodePath(result, stack);
         }
 
         /// <summary>
@@ -724,7 +739,7 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             return BfsBinaryMaxNodePath(result, queue);
         }
 
-        private int RfsBinaryMaxNodePath(int result, Stack<Node> stack)
+        private int RDfsBinaryMaxNodePath(int result, Stack<Node> stack)
         {
             if (stack.Count == 0)
                 return result;
@@ -739,7 +754,7 @@ namespace DataStructureAlgorithms.Core.BinaryTree
                 if (current.LeftChild != null)
                     stack.Push(current.LeftChild);
 
-                return RfsBinaryMaxNodePath(result, stack);
+                return RDfsBinaryMaxNodePath(result, stack);
             }
 
             var pathSum = 0;
@@ -753,7 +768,7 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             if (pathSum > result)
                 result = pathSum;
 
-            return RfsBinaryMaxNodePath(result, stack);
+            return RDfsBinaryMaxNodePath(result, stack);
         }
 
         private int DfsBinaryMinNodePath(int result, Stack<Node> stack)
