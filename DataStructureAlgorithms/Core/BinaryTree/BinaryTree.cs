@@ -347,6 +347,68 @@ namespace DataStructureAlgorithms.Core.BinaryTree
             return root.Value + minValue;
         }
 
+        /// <summary>
+        ///     Given value, checks if value is perfect power
+        ///     of two of any positive number
+        /// </summary>
+        /// <remarks>
+        ///     Use type long instead of type int for performance
+        /// </remarks>
+        public bool IsPerfectPowerOfTwo(int value)
+        {
+            var left = 0;
+            var right = value;
+            int pivot;
+
+            while (left <= right)
+            {
+                pivot = left + (right - left) / 2;
+                var square = pivot * pivot;
+
+                if (square == value)
+                    return true;
+
+                if (square < value)
+                    left = pivot + 1;
+
+                if (square > value)
+                    right = pivot - 1;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Given value, checks if value is perfect power
+        ///     of tree of any positive number
+        /// </summary>
+        /// <remarks>
+        ///     Use type long instead of type int for performance
+        /// </remarks>
+        public bool IsPerfectPowerOfTree(int value)
+        {
+            var left = 0;
+            var right = value;
+            int pivot;
+
+            while (left <= right)
+            {
+                pivot = left + (right - left) / 2;
+                var cube = pivot * pivot * pivot;
+
+                if (cube == value)
+                    return true;
+
+                if (cube < value)
+                    left = pivot + 1;
+
+                if (cube > value)
+                    right = pivot - 1;
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region Private
