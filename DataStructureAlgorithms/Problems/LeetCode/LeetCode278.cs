@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-
-namespace DataStructureAlgorithms.Problems.LeetCode
+﻿namespace DataStructureAlgorithms.Problems.LeetCode
 {
     /// <summary>
     ///     LeetCode 278 - First Bad Version
