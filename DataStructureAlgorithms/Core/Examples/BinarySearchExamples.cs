@@ -4,7 +4,7 @@ using DataStructureAlgorithms.Core.BinaryTree;
 
 namespace DataStructureAlgorithms.Core.Examples
 {
-    public static class Examples
+    public static class BinarySearchExamples
     {
         public static void BinarySearch()
         {

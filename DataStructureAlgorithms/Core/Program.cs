@@ -1,5 +1,6 @@
 ﻿using System;
-using DataStructureAlgorithms.Problems.LeetCode;
+using DataStructureAlgorithms.Core.Examples;
+using DataStructureAlgorithms.Core.LinkedList;
 
 namespace DataStructureAlgorithms.Core
 {
@@ -7,7 +8,7 @@ namespace DataStructureAlgorithms.Core
     {
         static void Main(string[] args)
         {
-            Examples.Examples.BinaryTreeMax();
+            LinkedListExamples.LinkedListReverse();
         }
     }
 }
