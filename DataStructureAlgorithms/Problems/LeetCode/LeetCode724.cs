@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Linq;
 
 namespace DataStructureAlgorithms.Problems.LeetCode
 {
@@ -29,5 +26,25 @@ namespace DataStructureAlgorithms.Problems.LeetCode
 
             return -1;
         }
+
+        // C++ Solution
+        // int pivotIndex(std::vector<int>& nums)
+        // {
+        //     int leftSum = 0;
+        //     int sum = 0;
+        //     for (int num : nums)
+        //     sum += num;
+        //
+        //     for (int i = 0; i < nums.size(); ++i)
+        //     {
+        //         // nums[i] = PIVOT
+        //         if (leftSum == sum - leftSum - nums[i])
+        //             return i;
+        //
+        //         leftSum += nums[i];
+        //     }
+        //
+        //     return -1;
+        // }
     }
 }

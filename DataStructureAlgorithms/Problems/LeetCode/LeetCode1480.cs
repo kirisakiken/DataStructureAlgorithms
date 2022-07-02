@@ -16,4 +16,21 @@
             return res;
         }
     }
+    
+    // C++ Solution - 0 ms
+    // #include <vector>
+    //
+    // std::vector<int> runningSum(std::vector<int>& nums)
+    // {
+    //     int sum = 0;
+    //     std::vector<int> result;
+    //     result.push_back(nums[0]);
+    //
+    //     for (int i = 1; i < nums.size(); ++i)
+    //     {
+    //         result.push_back(result[i - 1] + nums[i]);
+    //     }
+    //
+    //     return result;
+    // }
 }
