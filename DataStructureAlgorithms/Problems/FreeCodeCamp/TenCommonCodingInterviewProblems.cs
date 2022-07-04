@@ -95,5 +95,161 @@ namespace DataStructureAlgorithms.Problems.FreeCodeCamp
 
             return true;
         }
+
+        /// <summary>
+        ///     LeetCode 34 - Find First and Last Position of Element in Sorted Array
+        ///     https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+        ///
+        ///     O(n) - time
+        ///     O(1) - space
+        /// </summary>
+        // C++ Solution
+        // int findStart(std::vector<int>& nums, int target)
+        // {
+        //     if (nums[0] == target)
+        //         return 0;
+        //
+        //     int left = 0;
+        //     int right = nums.size() - 1;
+        //
+        //     while (left <= right)
+        //     {
+        //         int pivot = (left + right)  >> 1;
+        //
+        //         if (nums[pivot] == target && nums[pivot - 1] < target)
+        //             return pivot;
+        //
+        //         if (nums[pivot] < target)
+        //         {
+        //             left = pivot + 1;
+        //             continue;
+        //         }
+        //
+        //         if (nums[pivot] > target)
+        //         {
+        //             right = pivot - 1;
+        //             continue;
+        //         }
+        //     }
+        //
+        //     return -1;
+        // }
+        //
+        // int findEnd(std::vector<int>& nums, int target)
+        // {
+        //     if (nums[nums.size() - 1] == target)
+        //         return nums.size() - 1;
+        //
+        //     int left = 0;
+        //     int right = nums.size() - 1;
+        //
+        //     while (left <= right)
+        //     {
+        //         int pivot = (left + right) >> 1;
+        //
+        //         if (nums[pivot] == target && nums[pivot + 1] > target)
+        //             return pivot;
+        //
+        //         if (nums[pivot] < target)
+        //         {
+        //             left = pivot + 1;
+        //             continue;
+        //         }
+        //
+        //         if (nums[pivot] > target)
+        //         {
+        //             right = pivot - 1;
+        //             continue;
+        //         }
+        //     }
+        //
+        //     return -1;
+        // }
+        //
+        // std::vector<int> searchRange(std::vector<int>& nums, int target)
+        // {
+        //     std::vector<int> result;
+        //
+        //     if (nums.empty() || nums[0] > target || nums[nums.size() - 1] < target)
+        //     {
+        //         result.push_back(-1);
+        //         result.push_back(-1);
+        //         return result;
+        //     }
+        //
+        //     result.push_back(findStart(nums, target));
+        //     result.push_back(findEnd(nums, target));
+        //     return result;
+        // }
+        public int[] SearchRange(int[] nums, int target)
+        {
+            if (nums.Length == 0 || nums[0] > target || nums[nums.Length - 1] < target)
+                return new[] {-1, -1};
+
+            var start = FindStart(nums, target);
+            var end = FindEnd(nums, target);
+
+            return new[] {start, end};
+        }
+
+        public int FindStart(int[] nums, int target)
+        {
+            if (nums.Length == 0)
+                return 0;
+
+            var left = 0;
+            var right = nums.Length - 1;
+
+            while (left <= right)
+            {
+                var pivot = left + (right - left) / 2;
+
+                if (nums[pivot] == target && nums[pivot - 1] < target)
+                    return pivot;
+
+                if (nums[pivot] < target)
+                {
+                    left = pivot + 1;
+                    continue;
+                }
+                else
+                {
+                    right = pivot - 1;
+                    continue;
+                }
+            }
+
+            return -1;
+        }
+
+        public int FindEnd(int[] nums, int target)
+        {
+            if (nums[nums.Length - 1] == target)
+                return nums.Length - 1;
+
+            var left = 0;
+            var right = nums.Length - 1;
+
+            while (left <= right)
+            {
+                var pivot = left + (right - left) / 2;
+
+                if (nums[pivot] == target && nums[pivot + 1] > target)
+                    return pivot;
+
+                if (nums[pivot] > target)
+                {
+                    right = pivot - 1;
+                    continue;
+                }
+                else
+                {
+                    left = pivot + 1;
+                    continue;
+                }
+            }
+
+            return -1;
+        }
     }
 }
