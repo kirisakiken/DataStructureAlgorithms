@@ -251,5 +251,44 @@ namespace DataStructureAlgorithms.Problems.FreeCodeCamp
 
             return -1;
         }
+
+        /// <summary>
+        ///     Leetcode 215 - Kth Largest Element in an Array
+        ///     https://leetcode.com/problems/kth-largest-element-in-an-array/
+        /// </summary>
+        // C++ Solution
+        // int findKthLargest(std::vector<int>& nums, int k)
+        // {
+        //     std::vector<int> values;
+        //     for (int i = 0; i < nums.size(); ++i)
+        //         values.push_back(std::numeric_limits<int>::min());
+        //
+        //     for (int i = 0; i < nums.size(); ++i)
+        //     {
+        //         for (int j = 0; j < k; ++j)
+        //         {
+        //             if (nums[i] >= values[j])
+        //             {
+        //                 values.insert(values.begin() + j, nums[i]);
+        //                 j = k;
+        //             }
+        //         }
+        //     }
+        //
+        //     return values[k - 1];
+        // }
+        // C++ Solution by Sorting
+        // int findKthLargest(std::vector<int>& nums, int k)
+        // {
+        //     std::sort(nums.begin(), nums.end());
+        //     return nums[nums.size() - k];
+        // }
+        public int FindKthLargest(int[] nums, int k)
+        {
+            var arr = nums.ToList();
+            arr.Sort();
+
+            return arr[arr.Count - k];
+        }
     }
 }
