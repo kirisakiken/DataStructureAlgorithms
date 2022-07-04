@@ -290,5 +290,99 @@ namespace DataStructureAlgorithms.Problems.FreeCodeCamp
 
             return arr[arr.Count - k];
         }
+
+        /// <summary>
+        ///     LeetCode 101 - Symmetric Tree
+        ///     https://leetcode.com/problems/symmetric-tree/
+        /// </summary>
+        // C++ Solution
+        // std::vector<TreeNode*> DepthFirstValues(std::vector<TreeNode*> result, std::stack<TreeNode*> stack)
+        // {
+        //     if (stack.empty())
+        //         return result;
+        //
+        //     TreeNode* current = stack.top();
+        //     stack.pop();
+        //
+        //     result.push_back(current);
+        //     result.push_back(current->left);
+        //     result.push_back(current->right);
+        //
+        //     if (current->left != nullptr)
+        //         stack.push(current->left);
+        //
+        //     if (current->right != nullptr)
+        //         stack.push(current->right);
+        //
+        //     return DepthFirstValues(result, stack);
+        // }
+        //
+        // std::vector<TreeNode*> DepthFirstValuesInverse(std::vector<TreeNode*> result, std::stack<TreeNode*> stack)
+        // {
+        //     if (stack.empty())
+        //         return result;
+        //
+        //     TreeNode* current = stack.top();
+        //     stack.pop();
+        //
+        //     result.push_back(current);
+        //     result.push_back(current->right);
+        //     result.push_back(current->left);
+        //
+        //     if (current->right != nullptr)
+        //         stack.push(current->right);
+        //
+        //     if (current->left != nullptr)
+        //         stack.push(current->left);
+        //
+        //     return DepthFirstValuesInverse(result, stack);
+        // }
+        //
+        // bool isSymmetric(TreeNode* root)
+        // {
+        //     if (root->left == nullptr && root->right == nullptr)
+        //         return true;
+        //
+        //     if (root->left == nullptr || root->right == nullptr)
+        //         return false;
+        //
+        //     std::stack<TreeNode*> leftStack;
+        //     std::stack<TreeNode*> rightStack;
+        //     std::vector<TreeNode*> leftValues;
+        //     std::vector<TreeNode*> rightValues;
+        //
+        //     leftStack.push(root->left);
+        //     rightStack.push(root->right);
+        //     auto lv = DepthFirstValues(leftValues, leftStack);
+        //     auto rv = DepthFirstValuesInverse(rightValues, rightStack);
+        //
+        //     for (int i = 0; i < lv.size(); ++i)
+        //     {
+        //         if (lv[i] == nullptr)
+        //         {
+        //             if (rv[i] != nullptr)
+        //                 return false;
+        //         }
+        //         if (rv[i] == nullptr)
+        //         {
+        //             if (lv[i] != nullptr)
+        //                 return false;
+        //         }
+        //
+        //         if (lv[i] == nullptr && rv[i] == nullptr)
+        //             continue;
+        //
+        //         if (lv[i]->val == rv[i]->val)
+        //             continue;
+        //         else
+        //             return false;
+        //     }
+        //
+        //     return true;
+        // }
+        public bool IsSymmetric(TreeNode root)
+        {
+            return false;
+        }
     }
 }
